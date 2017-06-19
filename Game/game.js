@@ -14,12 +14,13 @@ var gameOptions = {
     playerGravity: 900,
 
     // player horizontal speed
-    playerSpeed: 1,
+    playerSpeed: 30,
 
     // player force
     playerJump: 200
 }
 var cursors;
+var hero;
 window.onload = function () {
     game = new Phaser.Game(gameOptions.gameWidth, gameOptions.gameHeight);
     game.state.add("PreloadGame", preloadGame);
@@ -30,7 +31,9 @@ var preloadGame = function (game) { }
 preloadGame.prototype = {
     preload: function () {
         game.stage.backgroundColor = gameOptions.bgColor;
-        // game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        game.scale.setUserScale(2,2);
+        game.scale.scaleMode = Phaser.ScaleManager.USER_SCALE;
+
         game.scale.pageAlignHorizontally = true;
         game.scale.pageAlignVertically = true;
         game.stage.disableVisibilityChange = true;
@@ -64,36 +67,65 @@ playGame.prototype = {
         this.map.setCollision([2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18], true);
 
         // adding the hero sprite
-        this.hero = game.add.sprite(30, 79, "hero");
+        hero = game.add.sprite(30, 79, "hero");
 
         // setting hero anchor point
-        this.hero.anchor.set(0.5);
+        hero.anchor.set(0.5);
 
         // enabling ARCADE physics for the  hero
-        game.physics.enable(this.hero, Phaser.Physics.ARCADE);
+        game.physics.enable(hero, Phaser.Physics.ARCADE);
 
         // setting hero gravity
-        this.hero.body.gravity.y = gameOptions.playerGravity;
+        hero.body.gravity.y = gameOptions.playerGravity;
+
+        // handle keyboard
+        game.input.keyboard.onDownCallback = this.onDownCallback;
+        game.input.keyboard.onUpCallback = this.onUpCallback;
+    },
+    onDownCallback: function(ev) {
+        if (hero.onFloor) {
+            switch(ev.keyCode) {
+                case 39:
+                    if (hero.body.velocity.x<=0) {
+                        hero.body.velocity.x = gameOptions.playerSpeed;
+                    }
+                    break;
+                case 37:
+                    if (hero.body.velocity.x>=0) {
+                        hero.body.velocity.x = -gameOptions.playerSpeed;
+                    }
+                    break;
+                case 38: // UP
+                    hero.body.velocity.y = -gameOptions.playerJump;
+                    break;        
+            }
+        }
+        else {
+            // nothing to do during flight
+        }
+    },
+    onUpCallback: function(ev) {
+        switch(ev.keyCode) {
+            case 39:
+                if (hero.body.velocity.x>0) {
+                    hero.body.velocity.x = 0;
+                }
+                break;
+            case 37:
+                if (hero.body.velocity.x<0) {
+                    hero.body.velocity.x = 0;
+                }
+                break;
+            case 32:
+                // nothing to do with space
+                break;        
+        }
     },
     update: function () {
-
-        if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
-            this.hero.x -= gameOptions.playerSpeed;
-        }
-        else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
-            this.hero.x += gameOptions.playerSpeed;
-        }
-
         // handling collision between the hero and the tiles
-        game.physics.arcade.collide(this.hero, this.layer, function (hero, layer) {
-
-            if(this.hero.body.blocked.right){
-                debugger;
-            }
-            if(this.hero.body.blocked.left){
-                debugger;
-            }
-
+        hero.onFloor = false;
+        game.physics.arcade.collide(hero, this.layer, function (hero, layer) {
+            hero.onFloor = hero.body.blocked.down;
         }, null, this);
     }
 }
