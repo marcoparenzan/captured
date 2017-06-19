@@ -22,7 +22,7 @@ var gameOptions = {
 var cursors;
 var hero;
 window.onload = function () {
-    game = new Phaser.Game(gameOptions.gameWidth, gameOptions.gameHeight);
+    game = new Phaser.Game(gameOptions.gameWidth, gameOptions.gameHeight, null, "game");
     game.state.add("PreloadGame", preloadGame);
     game.state.add("PlayGame", playGame);
     game.state.start("PreloadGame");
