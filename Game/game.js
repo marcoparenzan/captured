@@ -41,7 +41,7 @@ preloadGame.prototype = {
         // loading level tilemap
         game.load.tilemap("screen", 'screens/001.json', null, Phaser.Tilemap.TILED_JSON);
         game.load.image("tile", "screens/001-tileset.png");
-        game.load.image("hero", "images/hero.png");
+        this.game.load.spritesheet("hero", "images/hero.png", 16, 21);
     },
     create: function () {
         game.state.start("PlayGame");
@@ -68,6 +68,8 @@ playGame.prototype = {
 
         // adding the hero sprite
         hero = game.add.sprite(30, 79, "hero");
+        hero.animations.add('left', [0, 1, 2, 3, 4, 5, 6, 7, 8], 8, true)
+        hero.animations.add('right', [9, 10, 11, 12, 13, 14, 15, 16, 17], 8, true)
 
         // setting hero anchor point
         hero.anchor.set(0.5);
@@ -88,15 +90,18 @@ playGame.prototype = {
                 case 39:
                     if (hero.body.velocity.x<=0) {
                         hero.body.velocity.x = gameOptions.playerSpeed;
+                        hero.animations.play("right");
                     }
                     break;
                 case 37:
                     if (hero.body.velocity.x>=0) {
                         hero.body.velocity.x = -gameOptions.playerSpeed;
+                        hero.animations.play("left");
                     }
                     break;
                 case 38: // UP
                     hero.body.velocity.y = -gameOptions.playerJump;
+                    hero.animations.stop();
                     break;        
             }
         }
@@ -109,11 +114,13 @@ playGame.prototype = {
             case 39:
                 if (hero.body.velocity.x>0) {
                     hero.body.velocity.x = 0;
+                    hero.animations.stop();
                 }
                 break;
             case 37:
                 if (hero.body.velocity.x<0) {
                     hero.body.velocity.x = 0;
+                    hero.animations.stop();
                 }
                 break;
             case 32:
