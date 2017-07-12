@@ -7,15 +7,6 @@ define([], function () {
         gameHeight: 200,
 
         // background color
-        bgColor: 0x000000,
-
-        // player gravity
-        playerGravity: 900,
-
-        // player horizontal speed
-        playerSpeed: 30,
-
-        // player force
-        playerJump: 200
+        bgColor: 0x000000
     };
 });
