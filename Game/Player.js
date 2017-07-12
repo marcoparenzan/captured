@@ -3,7 +3,7 @@ define([], function () {
         var self = this;
 
         self.preload = function () {
-            game.load.spritesheet("player", "images/player.png", 16, 21);
+            game.load.spritesheet("player", "images/player.png", 24, 21);
             return self;
         };
 
@@ -11,9 +11,11 @@ define([], function () {
 
             // adding the hero sprite
             self.sprite = game.add.sprite(config.x0, config.y0, "player");
+            self.sprite.animations.add('stopleft', [0]);
+            self.sprite.animations.add('stopright', [9]);
             self.sprite.animations.add('left', [0, 1, 2, 3, 4, 5, 6, 7, 8], 8, true);
-            self.sprite.animations.add('right', [9, 10, 11, 12, 13, 14, 15, 16, 17], 8, true);
-            self.sprite.animations.add('explode', [9, 10, 11, 12, 13, 14, 15, 16, 17], 8);
+            self.sprite.animations.add('right', [9, 10, 11, 12, 13, 14, 15, 16, 17], 60, true);
+            self.sprite.animations.add('explode', [24,25,26,27,28,29,30], 8);
 
             // enabling ARCADE physics for the  hero
             game.physics.enable(self.sprite, Phaser.Physics.ARCADE);
@@ -33,6 +35,7 @@ define([], function () {
             self.sprite.y = config.y0;
             // setting hero gravity
             self.sprite.body.gravity.y = config.gravity;
+            self.sprite.animations.play("stopright");
             return self;
         }
 
@@ -72,14 +75,14 @@ define([], function () {
         self.stopright = function () {
             if (self.sprite.body.velocity.x > 0) {
                 self.sprite.body.velocity.x = 0;
-                self.sprite.animations.stop();
+                self.sprite.animations.play("stopright");
             }
         };
 
         self.stopleft = function () {
             if (self.sprite.body.velocity.x < 0) {
                 self.sprite.body.velocity.x = 0;
-                self.sprite.animations.stop();
+                self.sprite.animations.play("stopleft");
             }
             return self;
         };

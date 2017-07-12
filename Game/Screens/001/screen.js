@@ -27,6 +27,7 @@ define(["gameOptions", "player", "enemy"], function (gameOptions, Player, Enemy)
 
             this.enemy1 = new Enemy(game, {
                 name: "enemy1",
+                spriteframesname: "06",
                 x0: 112,
                 y0: 48,
                 y1: 48,
@@ -38,6 +39,7 @@ define(["gameOptions", "player", "enemy"], function (gameOptions, Player, Enemy)
             
             this.enemy2 = new Enemy(game, {
                 name: "enemy2",
+                spriteframesname: "copterside",
                 x0: 168,
                 y0: 72,
                 y1: 73,
@@ -49,6 +51,7 @@ define(["gameOptions", "player", "enemy"], function (gameOptions, Player, Enemy)
 
             this.enemy3 = new Enemy(game, {
                 name: "enemy3",
+                spriteframesname: "05",
                 x0: 192,
                 y0: 150,
                 x1: 192,
