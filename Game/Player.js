@@ -3,12 +3,12 @@ define([], function () {
         var self = this;
 
         self.preload = function() {
-            game.load.spritesheet("hero", "images/hero.png", 16, 21);
+            game.load.spritesheet("player", "images/player.png", 16, 21);
         };
 
         self.create = function(x, y) {
             // adding the hero sprite
-            self.sprite = game.add.sprite(x, y, "hero");
+            self.sprite = game.add.sprite(x, y, "player");
             self.sprite.animations.add('left', [0, 1, 2, 3, 4, 5, 6, 7, 8], 8, true)
             self.sprite.animations.add('right', [9, 10, 11, 12, 13, 14, 15, 16, 17], 8, true)
  

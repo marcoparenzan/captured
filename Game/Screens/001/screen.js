@@ -10,8 +10,8 @@ define(["gameOptions", "player"], function (gameOptions, Player) {
             game.stage.disableVisibilityChange = true;
 
             // loading level tilemap
-            game.load.tilemap("screen001", 'screens/001.json', null, Phaser.Tilemap.TILED_JSON);
-            game.load.image("tile001", "screens/001-tileset.png");
+            game.load.tilemap("screen001", 'screens/001/tilemap.json', null, Phaser.Tilemap.TILED_JSON);
+            game.load.image("tile001", "screens/001/tileset.png");
     
             this.player = new Player(game, gameOptions);
             this.player.preload();
