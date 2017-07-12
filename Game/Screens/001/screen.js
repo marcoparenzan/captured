@@ -1,14 +1,6 @@
 define(["gameOptions", "player", "enemy"], function (gameOptions, Player, Enemy) {
     return function (game) {
         this.preload = function () {
-            game.stage.backgroundColor = gameOptions.bgColor;
-            game.scale.setUserScale(2, 2);
-            game.scale.scaleMode = Phaser.ScaleManager.USER_SCALE;
-
-            game.scale.pageAlignHorizontally = true;
-            game.scale.pageAlignVertically = true;
-            game.stage.disableVisibilityChange = true;
-
             // loading level tilemap
             game.load.tilemap("screen001", 'screens/001/tilemap.json', null, Phaser.Tilemap.TILED_JSON);
             game.load.image("tile001", "screens/001/tileset.png");
@@ -64,9 +56,6 @@ define(["gameOptions", "player", "enemy"], function (gameOptions, Player, Enemy)
 
         this.create = function () {
             var self = this;
-
-            // starting ARCADE physics
-            game.physics.startSystem(Phaser.Physics.ARCADE);
 
             // creatin of "level" tilemap
             self.map = game.add.tilemap("screen001");
