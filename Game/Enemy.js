@@ -57,15 +57,15 @@ define([], function () {
             self.oncreate = function (enemy) {
             };
             self.onrestart = function (enemy) {
-                enemy.sprite.body.x = config.x0;
-                enemy.sprite.body.y = config.y0;
+                enemy.sprite.x = config.x0;
+                enemy.sprite.y = config.y0;
                 enemy.right();
             };
             self.onupdatelevel = function (enemy) {
-                if (enemy.sprite.body.x >= config.x2) {
+                if (enemy.sprite.x >= config.x2) {
                     enemy.left();
                 }
-                if (enemy.sprite.body.x <= config.x1) {
+                if (enemy.sprite.x <= config.x1) {
                     enemy.right();
                 }
             };
@@ -74,15 +74,15 @@ define([], function () {
             self.oncreate = function (enemy) {
             };
             self.onrestart = function (enemy) {
-                enemy.sprite.body.x = config.x0;
-                enemy.sprite.body.y = config.y0;
+                enemy.sprite.x = config.x0;
+                enemy.sprite.y = config.y0;
                 enemy.down();
             };
             self.onupdatelevel = function (enemy) {
-                if (enemy.sprite.body.y >= config.y2) {
+                if (enemy.sprite.y >= config.y2) {
                     enemy.up();
                 }
-                if (enemy.sprite.body.y <= config.y1) {
+                if (enemy.sprite.y <= config.y1) {
                     enemy.down();
                 }
             };
@@ -105,7 +105,8 @@ define([], function () {
             self.sprite.body.gravity.y = 0;
 
             // setting hero anchor point
-            self.sprite.anchor.set(0.5);
+            self.sprite.anchor.x = 0.5;
+            self.sprite.anchor.y = 1.0;
             if (self.oncreate != undefined) self.oncreate(self);
             return self;
         };

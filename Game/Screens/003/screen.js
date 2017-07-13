@@ -2,8 +2,8 @@ define(["gameOptions", "player", "enemy"], function (gameOptions, Player, Enemy)
     return function (game) {
         this.preload = function () {
             // loading level tilemap
-            game.load.tilemap("default", 'screens/001/tilemap.json', null, Phaser.Tilemap.TILED_JSON);
-            game.load.image("default", "screens/001/tileset.png");
+            game.load.tilemap("default", 'screens/003/tilemap.json', null, Phaser.Tilemap.TILED_JSON);
+            game.load.image("default", "screens/003/tileset.png");
     
             this.player = new Player(game, {
                 x0: 30,
@@ -17,46 +17,41 @@ define(["gameOptions", "player", "enemy"], function (gameOptions, Player, Enemy)
             });
             this.player.preload();
 
-            this.enemies = {};
-            this.eachenemy = function(callback) {
-                var keys = Object.keys(this.enemies);
-                for(var i = 0; i<keys.length; i++) {
-                    callback(this.enemies[keys[i]]);
-                }
-            };
-
-            this.enemies["1"] = new Enemy(game, {
+            this.enemy1 = new Enemy(game, {
                 name: "enemy1",
                 spriteframesname: "06",
-                x0: 13*8+12,
-                y0: 7*8,
-                y1: 7*8,
-                y2: 22*8,
+                x0: 112,
+                y0: 48,
+                y1: 48,
+                y2: 154,
                 speed: 95,
                 mode: "ud"
-            }).preload();
+            });
+            this.enemy1.preload();
             
-            this.enemies["2"] = new Enemy(game, {
+            this.enemy2 = new Enemy(game, {
                 name: "enemy2",
                 spriteframesname: "copterside",
-                x0: 20*8+12,
-                y0: 12*8,
-                y1: 12*8,
-                y2: 16*8,
-                speed: 30,
+                x0: 168,
+                y0: 72,
+                y1: 73,
+                y2: 106,
+                speed: 39,
                 mode: "ud"
-            }).preload();
+            });
+            this.enemy2.preload();
 
-            this.enemies["3"] = new Enemy(game, {
+            this.enemy3 = new Enemy(game, {
                 name: "enemy3",
                 spriteframesname: "05",
-                x0: 23*8+12,
-                y0: 20*8,
-                x1: 23*8+12,
-                x2: 40*8-12,
+                x0: 192,
+                y0: 150,
+                x1: 192,
+                x2: 302,
                 speed: 68,
                 mode: "lr"
-            }).preload();
+            });
+            this.enemy3.preload();
         };
 
         this.create = function () {
@@ -73,9 +68,9 @@ define(["gameOptions", "player", "enemy"], function (gameOptions, Player, Enemy)
 
             self.player.create().restart();
 
-            this.eachenemy(function(enemy){
-                enemy.create().restart();
-            });
+            self.enemy1.create().restart();
+            self.enemy2.create().restart();
+            self.enemy3.create().restart();
         };
 
         this.playerOnEnemy = function() {
@@ -94,17 +89,17 @@ define(["gameOptions", "player", "enemy"], function (gameOptions, Player, Enemy)
             var self = this;
             self._suspended = true;
             self.player.suspend();
-            this.eachenemy(function(enemy){
-                enemy.suspend();
-            });
+            self.enemy1.suspend();
+            self.enemy2.suspend();
+            self.enemy3.suspend();
         };
         
         this.restart = function() {
             var self = this;
             self.player.restart();
-            this.eachenemy(function(enemy){
-                enemy.restart();
-            });
+            self.enemy1.restart();
+            self.enemy2.restart();
+            self.enemy3.restart();
             self._suspended = false;
         };
 
@@ -113,11 +108,18 @@ define(["gameOptions", "player", "enemy"], function (gameOptions, Player, Enemy)
             if (self._suspended == true) return;
 
             self.player.updatelevel(self);
-            this.eachenemy(function(enemy){
-                enemy.updatelevel(self);
-                self.player.updateenemy(enemy, function(){
-                    self.playerOnEnemy();
-                });
+            self.enemy1.updatelevel(self);
+            self.enemy2.updatelevel(self);
+            self.enemy3.updatelevel(self);
+            
+            self.player.updateenemy(self.enemy1, function(){
+                self.playerOnEnemy();
+            });
+            self.player.updateenemy(self.enemy2, function(){
+                self.playerOnEnemy();
+            });
+            self.player.updateenemy(self.enemy3, function(){
+                self.playerOnEnemy();
             });
         };
     };

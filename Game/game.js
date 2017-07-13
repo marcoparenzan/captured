@@ -5,9 +5,15 @@ requirejs.config({
 });
 
 requirejs(["gameOptions",
-    "screens/001/screen"
+    "screens/001/screen",
+    "screens/002/screen",
+    "screens/003/screen",
+    "screens/004/screen",
 ], function (gameOptions,
-    Screen001
+    Screen001,
+    Screen002,
+    Screen003,
+    Screen004
 ) {
         game = new Phaser.Game(gameOptions.gameWidth, gameOptions.gameHeight, null, "game");
 
@@ -68,5 +74,8 @@ requirejs(["gameOptions",
         game.state.add("init", new Init(game));
         game.state.add("title", new Title(game));
         game.state.add("screen001", new Screen001(game));
+        game.state.add("screen002", new Screen002(game));
+        game.state.add("screen003", new Screen003(game));
+        game.state.add("screen004", new Screen004(game));
         game.state.start("init");
     });

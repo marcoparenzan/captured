@@ -2,12 +2,12 @@ define(["gameOptions", "player", "enemy"], function (gameOptions, Player, Enemy)
     return function (game) {
         this.preload = function () {
             // loading level tilemap
-            game.load.tilemap("default", 'screens/001/tilemap.json', null, Phaser.Tilemap.TILED_JSON);
-            game.load.image("default", "screens/001/tileset.png");
+            game.load.tilemap("default", 'screens/002/tilemap.json', null, Phaser.Tilemap.TILED_JSON);
+            game.load.image("default", "screens/002/tileset.png");
     
             this.player = new Player(game, {
-                x0: 30,
-                y0: 66,                        
+                x0: 8,
+                y0: 160,                        
                 // player gravity
                 gravity: 900,
                 // player horizontal speed
@@ -25,35 +25,24 @@ define(["gameOptions", "player", "enemy"], function (gameOptions, Player, Enemy)
                 }
             };
 
-            this.enemies["1"] = new Enemy(game, {
-                name: "enemy1",
-                spriteframesname: "06",
-                x0: 13*8+12,
-                y0: 7*8,
-                y1: 7*8,
-                y2: 22*8,
-                speed: 95,
-                mode: "ud"
-            }).preload();
-            
             this.enemies["2"] = new Enemy(game, {
                 name: "enemy2",
-                spriteframesname: "copterside",
-                x0: 20*8+12,
-                y0: 12*8,
-                y1: 12*8,
-                y2: 16*8,
-                speed: 30,
+                spriteframesname: "cube",
+                x0: 10*8,
+                y0: 9*8,
+                y1: 9*8,
+                y2: 12*8,
+                speed: 20,
                 mode: "ud"
             }).preload();
 
             this.enemies["3"] = new Enemy(game, {
                 name: "enemy3",
-                spriteframesname: "05",
-                x0: 23*8+12,
-                y0: 20*8,
-                x1: 23*8+12,
-                x2: 40*8-12,
+                spriteframesname: "18",
+                x0: 17*8+12,
+                y0: 22*8,
+                x1: 17*8+12,
+                x2: 34*8-12,
                 speed: 68,
                 mode: "lr"
             }).preload();

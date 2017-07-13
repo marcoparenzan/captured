@@ -21,7 +21,8 @@ define([], function () {
             game.physics.enable(self.sprite, Phaser.Physics.ARCADE);
 
             // setting hero anchor point
-            self.sprite.anchor.set(0.5);
+            self.sprite.anchor.x = 0.5;
+            self.sprite.anchor.y = 1.0;
 
             // handle keyboard
             game.input.keyboard.onDownCallback = self.onDownCallback;
