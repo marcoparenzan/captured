@@ -143,9 +143,9 @@ define([], function () {
             game.physics.arcade.collide(self.sprite, level.layer, function (hero, layer) {
                 if (self.onFloor == false && hero.body.blocked.down) {
                     // touch down!
+                    self.onFloor = hero.body.blocked.down;
                     self.startanimation();
                 }
-                self.onFloor = hero.body.blocked.down;
             }, null, level);
             return self;
         };

@@ -26,9 +26,18 @@ requirejs(["gameOptions",
                 game.scale.pageAlignHorizontally = true;
                 game.scale.pageAlignVertically = true;
                 game.stage.disableVisibilityChange = true;
+
+                // found the sid tune: http://www.lemon64.com/?mainurl=http%3A//www.lemon64.com/games/details.php%3FID%3D419
+                // user sidplay to convert to wav: http://csdb.dk/release/?id=103781
+                game.load.audio('default', ['captured.wav']);
             };
 
             this.create = function () {
+
+                var backgroundMusic = game.add.audio('default');
+                backgroundMusic.loop = true;
+                backgroundMusic.play();
+
                 // starting ARCADE physics
                 game.physics.startSystem(Phaser.Physics.ARCADE);
                 game.state.start("title");
