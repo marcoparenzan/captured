@@ -59,7 +59,7 @@ requirejs(["gameOptions",
                     switch (ev.keyCode) {
                         case 32:
                         case 38:
-                            game.state.start("screen001");
+                            game.state.start("screen002");
                             break;
                     }
                 };

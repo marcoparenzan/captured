@@ -13,7 +13,7 @@ define(["gameOptions", "player", "enemy"], function (gameOptions, Player, Enemy)
                 // player horizontal speed
                 speed: 60,
                 // player force
-                jump: 200
+                jump: 180
             });
             this.player.preload();
 
